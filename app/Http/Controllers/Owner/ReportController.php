@@ -77,7 +77,13 @@ class ReportController extends Controller
 
         $products = Product::orderBy('name')->get(['id', 'name']);
 
-        return view('owner.reports.stocks', compact('movements', 'products', 'dateFrom', 'dateTo', 'productId', 'type'));
+        $summary = [
+            'total_in'          => $movements->where('type', 'IN')->sum('quantity'),
+            'total_out'         => $movements->where('type', 'OUT')->sum('quantity'),
+            'total_adjustment'  => $movements->where('type', 'ADJUSTMENT')->count(),
+        ];
+
+        return view('owner.reports.stocks', compact('movements', 'summary', 'products', 'dateFrom', 'dateTo', 'productId', 'type'));
     }
 
     // ─── PDF Exports ─────────────────────────────────────────────────────────

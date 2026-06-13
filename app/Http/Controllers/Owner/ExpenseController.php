@@ -62,7 +62,7 @@ class ExpenseController extends Controller
     {
         $validated = $request->validate([
             'expense_date' => ['required', 'date'],
-            'category'     => ['required', 'string', 'max:100'],
+            'category'     => ['required', 'string', \Illuminate\Validation\Rule::in(Expense::CATEGORIES)],
             'description'  => ['required', 'string', 'max:500'],
             'amount'       => ['required', 'numeric', 'min:1'],
         ]);

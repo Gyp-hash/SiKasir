@@ -75,6 +75,15 @@ class PosController extends Controller
             'quantity' => ['required', 'integer', 'min:1'],
         ]);
 
+        if ($product->status !== Product::STATUS_ACTIVE) {
+            // Remove the inactive product from cart automatically
+            $cart = $request->session()->get('cart', []);
+            unset($cart[$product->id]);
+            $request->session()->put('cart', $cart);
+
+            return back()->with('error', "Produk \"{$product->name}\" sudah tidak aktif dan dihapus dari keranjang.");
+        }
+
         $quantity = (int) $validated['quantity'];
 
         if ($quantity > $product->stock) {
@@ -105,12 +114,16 @@ class PosController extends Controller
             'cash_paid' => ['required', 'numeric', 'min:0'],
         ]);
 
-        $transaction = $this->transactionService->checkout(
-            $request->user(),
-            $request->session()->get('cart', []),
-            (float) ($validated['discount'] ?? 0),
-            (float) $validated['cash_paid'],
-        );
+        try {
+            $transaction = $this->transactionService->checkout(
+                $request->user(),
+                $request->session()->get('cart', []),
+                (float) ($validated['discount'] ?? 0),
+                (float) $validated['cash_paid'],
+            );
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()->withErrors($e->errors())->with('error', collect($e->errors())->flatten()->first());
+        }
 
         $request->session()->forget('cart');
 

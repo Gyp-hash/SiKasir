@@ -80,6 +80,20 @@ class ProductController extends Controller
 
     public function destroy(Product $product): RedirectResponse
     {
+        // Cek apakah produk sudah memiliki riwayat stok
+        if ($product->stockMovements()->exists()) {
+            return redirect()
+                ->route('owner.products.index')
+                ->with('error', "Produk \"{$product->name}\" tidak dapat dihapus karena sudah memiliki riwayat pergerakan stok. Nonaktifkan produk ini jika tidak ingin ditampilkan.");
+        }
+
+        // Cek apakah produk sudah pernah masuk ke transaksi
+        if ($product->transactionDetails()->exists()) {
+            return redirect()
+                ->route('owner.products.index')
+                ->with('error', "Produk \"{$product->name}\" tidak dapat dihapus karena sudah memiliki riwayat transaksi penjualan. Nonaktifkan produk ini jika tidak ingin ditampilkan.");
+        }
+
         $this->deleteImage($product);
         $product->delete();
 

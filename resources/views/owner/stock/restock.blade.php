@@ -1,29 +1,27 @@
-@extends('layouts.app', ['title' => 'Restok Produk - SiKasir Angkringan'])
+@extends('layouts.app', ['title' => 'Restok Produk - Sikasir Angkringan'])
 
 @section('content')
 <div class="row justify-content-center">
     <div class="col-lg-6">
 
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <a href="{{ route('owner.stock.index') }}" class="btn btn-outline-secondary btn-sm">← Riwayat Stok</a>
-            <h1 class="h5 mb-0 text-muted">Restok Produk</h1>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="{{ route('owner.stock.index') }}" class="btn btn-outline-secondary d-flex align-items-center gap-2 fw-semibold">
+                <i class="bi bi-arrow-left"></i> Kembali
+            </a>
+            <h1 class="h5 mb-0 fw-bold text-dark">Restok Produk</h1>
         </div>
 
-        <div class="card shadow-sm">
-            <div class="card-header bg-dark text-white">
-                <span class="fw-semibold">Form Penambahan Stok</span>
-            </div>
-
+        <div class="card">
             <div class="card-body">
+                <div class="fw-bold mb-4 text-dark">Form Penambahan Stok</div>
 
                 @if ($errors->any())
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <ul class="mb-0">
+                    <div class="alert alert-danger mb-4" role="alert">
+                        <ul class="mb-0 small">
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
                         </ul>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
 
@@ -32,7 +30,7 @@
 
                     {{-- Pilih Produk --}}
                     <div class="mb-3">
-                        <label for="product_id" class="form-label fw-semibold">
+                        <label for="product_id" class="form-label">
                             Produk <span class="text-danger">*</span>
                         </label>
                         <select
@@ -42,7 +40,7 @@
                             required
                             onchange="updateStockInfo(this)"
                         >
-                            <option value="">— Pilih Produk —</option>
+                            <option value="">Pilih Produk</option>
                             @foreach ($products as $product)
                                 <option
                                     value="{{ $product->id }}"
@@ -59,13 +57,13 @@
                     </div>
 
                     {{-- Info Stok Saat Ini --}}
-                    <div id="stock-info" class="alert alert-info py-2 small mb-3" style="display:none;">
+                    <div id="stock-info" class="alert alert-info py-2 mb-3" style="display:none;">
                         Stok saat ini: <strong id="current-stock">0</strong>
                     </div>
 
                     {{-- Jumlah Restok --}}
                     <div class="mb-3">
-                        <label for="quantity" class="form-label fw-semibold">
+                        <label for="quantity" class="form-label">
                             Jumlah Restok <span class="text-danger">*</span>
                         </label>
                         <input
@@ -75,7 +73,7 @@
                             class="form-control @error('quantity') is-invalid @enderror"
                             min="1"
                             value="{{ old('quantity', '') }}"
-                            placeholder="Masukkan jumlah stok yang ditambahkan..."
+                            placeholder="Masukkan jumlah stok..."
                             required
                             oninput="updatePreview()"
                         >
@@ -85,13 +83,13 @@
                     </div>
 
                     {{-- Preview Stok Baru --}}
-                    <div id="stock-preview" class="alert alert-success py-2 small mb-3" style="display:none;">
+                    <div id="stock-preview" class="alert alert-success py-2 mb-3" style="display:none;">
                         Stok baru setelah restok: <strong id="stock-after-preview">0</strong>
                     </div>
 
                     {{-- Catatan --}}
                     <div class="mb-4">
-                        <label for="notes" class="form-label fw-semibold">Catatan</label>
+                        <label for="notes" class="form-label">Catatan</label>
                         <textarea
                             id="notes"
                             name="notes"
@@ -105,10 +103,10 @@
                     </div>
 
                     <div class="d-flex gap-2">
-                        <button type="submit" id="btn-restock" class="btn btn-success fw-bold">
-                            Simpan Restok
+                        <button type="submit" id="btn-restock" class="btn btn-primary fw-bold px-4">
+                            Simpan
                         </button>
-                        <a href="{{ route('owner.stock.index') }}" class="btn btn-outline-secondary">Batal</a>
+                        <a href="{{ route('owner.stock.index') }}" class="btn btn-outline-secondary fw-semibold">Batal</a>
                     </div>
                 </form>
             </div>

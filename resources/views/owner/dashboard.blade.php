@@ -1,12 +1,12 @@
-@extends('layouts.app', ['title' => 'Dashboard Owner - SiKasir Angkringan'])
+@extends('layouts.app', ['title' => 'Dashboard Owner - Sikasir Angkringan'])
 
 @section('content')
 
 {{-- Header --}}
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h1 class="h4 mb-0 fw-bold">Dashboard Owner</h1>
-        <p class="text-muted small mb-0">Selamat datang, {{ auth()->user()->name }} &mdash; {{ now()->translatedFormat('l, d F Y') }}</p>
+        <h1 class="h4 mb-1 fw-bold" style="color:#0F172A;">Ringkasan Operasional</h1>
+        <p class="text-muted small mb-0">{{ now()->translatedFormat('l, d F Y') }} &mdash; {{ auth()->user()->name }}</p>
     </div>
 </div>
 
@@ -14,10 +14,10 @@
 <div class="row g-3 mb-4">
 
     <div class="col-sm-6 col-xl-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-                <div class="text-muted small">Penjualan Hari Ini</div>
-                <div class="fs-4 fw-bold text-success mt-1">
+        <div class="card card-stat card-hover h-100" style="border-top: 3px solid #0FA4AF;">
+            <div class="card-body" style="padding:1.125rem 1.25rem;">
+                <div class="text-muted text-uppercase mb-2" style="font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em;">Penjualan Hari Ini</div>
+                <div class="fw-extrabold text-dark" style="font-size: 1.5rem; letter-spacing: -0.02em;">
                     Rp {{ number_format($salesToday, 0, ',', '.') }}
                 </div>
             </div>
@@ -25,10 +25,10 @@
     </div>
 
     <div class="col-sm-6 col-xl-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-                <div class="text-muted small">Penjualan Bulan Ini</div>
-                <div class="fs-4 fw-bold text-primary mt-1">
+        <div class="card card-stat card-hover h-100" style="border-top: 3px solid #16A34A;">
+            <div class="card-body" style="padding:1.125rem 1.25rem;">
+                <div class="text-muted text-uppercase mb-2" style="font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em;">Penjualan Bulan Ini</div>
+                <div class="fw-extrabold text-success" style="font-size: 1.5rem; letter-spacing: -0.02em;">
                     Rp {{ number_format($salesThisMonth, 0, ',', '.') }}
                 </div>
             </div>
@@ -36,10 +36,10 @@
     </div>
 
     <div class="col-sm-6 col-xl-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-                <div class="text-muted small">Pengeluaran Bulan Ini</div>
-                <div class="fs-4 fw-bold text-danger mt-1">
+        <div class="card card-stat card-hover h-100" style="border-top: 3px solid #964734;">
+            <div class="card-body" style="padding:1.125rem 1.25rem;">
+                <div class="text-muted text-uppercase mb-2" style="font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em;">Pengeluaran Bulan Ini</div>
+                <div class="fw-extrabold text-danger" style="font-size: 1.5rem; letter-spacing: -0.02em;">
                     Rp {{ number_format($expensesThisMonth, 0, ',', '.') }}
                 </div>
             </div>
@@ -47,10 +47,10 @@
     </div>
 
     <div class="col-sm-6 col-xl-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-                <div class="text-muted small">Est. Laba Bersih Bulan Ini</div>
-                <div class="fs-4 fw-bold mt-1 {{ $netProfitThisMonth >= 0 ? 'text-success' : 'text-danger' }}">
+        <div class="card card-stat card-hover h-100" style="border-top: 3px solid {{ $netProfitThisMonth >= 0 ? '#0FA4AF' : '#964734' }};">
+            <div class="card-body" style="padding:1.125rem 1.25rem;">
+                <div class="text-muted text-uppercase mb-2" style="font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em;">Est. Laba Bersih Bulan Ini</div>
+                <div class="fw-extrabold {{ $netProfitThisMonth >= 0 ? 'text-dark' : 'text-danger' }}" style="font-size: 1.5rem; letter-spacing: -0.02em;">
                     Rp {{ number_format($netProfitThisMonth, 0, ',', '.') }}
                 </div>
             </div>
@@ -63,144 +63,148 @@
 <div class="row g-3 mb-4">
 
     <div class="col-sm-4">
-        <div class="card border-0 shadow-sm text-center h-100">
-            <div class="card-body py-3">
-                <div class="text-muted small">Total Produk</div>
-                <div class="display-6 fw-bold text-dark">{{ $totalProducts }}</div>
+        <div class="card card-hover h-100">
+            <div class="card-body" style="padding:1.125rem 1.25rem;">
+                <div class="text-muted text-uppercase mb-2" style="font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em;">Total Produk Aktif</div>
+                <div class="fw-extrabold text-dark" style="font-size: 1.75rem;">{{ $totalProducts }}</div>
             </div>
         </div>
     </div>
 
     <div class="col-sm-4">
-        <div class="card border-0 shadow-sm text-center h-100">
-            <div class="card-body py-3">
-                <div class="text-muted small">Total Transaksi</div>
-                <div class="display-6 fw-bold text-dark">{{ $totalTransactions }}</div>
+        <div class="card card-hover h-100">
+            <div class="card-body" style="padding:1.125rem 1.25rem;">
+                <div class="text-muted text-uppercase mb-2" style="font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em;">Total Transaksi</div>
+                <div class="fw-extrabold text-dark" style="font-size: 1.75rem;">{{ $totalTransactions }}</div>
             </div>
         </div>
     </div>
 
     <div class="col-sm-4">
-        <div class="card border-0 shadow-sm text-center h-100">
-            <div class="card-body py-3">
-                <div class="text-muted small">Total Pengeluaran</div>
-                <div class="fs-4 fw-bold text-danger">Rp {{ number_format($totalExpenses, 0, ',', '.') }}</div>
+        <div class="card card-hover h-100">
+            <div class="card-body" style="padding:1.125rem 1.25rem;">
+                <div class="text-muted text-uppercase mb-2" style="font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em;">Total Pengeluaran</div>
+                <div class="fw-extrabold text-danger" style="font-size: 1.75rem;">Rp {{ number_format($totalExpenses, 0, ',', '.') }}</div>
             </div>
         </div>
     </div>
 
 </div>
 
-{{-- Baris 3: Grafik 7 Hari (kiri) + Stok Menipis (kanan) --}}
+{{-- Baris 3: Grafik (kiri) + Stok Menipis (kanan) --}}
 <div class="row g-3 mb-4">
 
     <div class="col-lg-8">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-header bg-white border-bottom-0 pb-0">
-                <h6 class="fw-bold mb-0">Penjualan vs Pengeluaran (7 Hari Terakhir)</h6>
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="fw-bold text-dark" style="font-size: 0.875rem;">Penjualan vs Pengeluaran — 7 Hari Terakhir</span>
             </div>
-            <div class="card-body">
-                <canvas id="salesExpensesChart" height="100"></canvas>
+            <div class="card-body" style="height: 340px; position: relative; padding: 1.25rem;">
+                <canvas id="salesExpensesChart"></canvas>
             </div>
         </div>
     </div>
 
     <div class="col-lg-4">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-header bg-white border-bottom-0 pb-0">
-                <h6 class="fw-bold mb-0">Produk Stok Menipis
-                    @if ($lowStockProducts->isNotEmpty())
-                        <span class="badge bg-danger ms-1">{{ $lowStockProducts->count() }}</span>
-                    @endif
-                </h6>
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="fw-bold text-dark" style="font-size: 0.875rem;">Stok Menipis</span>
+                @if ($lowStockProducts->isNotEmpty())
+                    <span class="badge bg-danger-subtle">{{ $lowStockProducts->count() }}</span>
+                @endif
             </div>
-            <div class="card-body p-0">
-                @if ($lowStockProducts->isEmpty())
-                    <div class="text-center text-muted py-4 small">
-                        Semua stok aman
-                    </div>
-                @else
+            @if ($lowStockProducts->isEmpty())
+                <div class="card-body text-center text-muted py-5">
+                    <i class="bi bi-check-circle text-success" style="font-size: 1.5rem;"></i>
+                    <p class="mt-2 small mb-0">Semua stok produk aman</p>
+                </div>
+            @else
+                <div style="overflow-y: auto; max-height: 240px;">
                     <ul class="list-group list-group-flush">
                         @foreach ($lowStockProducts as $product)
-                            <li class="list-group-item d-flex justify-content-between align-items-center px-3 py-2">
-                                <span class="small fw-semibold">{{ $product->name }}</span>
-                                <span class="badge {{ $product->stock <= 0 ? 'bg-danger' : 'bg-warning text-dark' }}">
-                                    Stok: {{ $product->stock }}
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-4 py-3" style="border-color: #F1F5F9;">
+                                <div class="min-width-0">
+                                    <div class="small fw-semibold text-dark text-truncate">{{ $product->name }}</div>
+                                </div>
+                                <span class="badge {{ $product->stock <= 0 ? 'bg-danger-subtle' : 'bg-warning-subtle' }} ms-2">
+                                    Sisa: {{ $product->stock }}
                                 </span>
                             </li>
                         @endforeach
                     </ul>
-                    <div class="px-3 py-2">
-                        <a href="{{ route('owner.stock.restock') }}" class="btn btn-sm btn-outline-dark w-100">
-                            Restok Sekarang
-                        </a>
-                    </div>
-                @endif
-            </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ route('owner.stock.restock') }}" class="btn btn-sm btn-primary w-100 fw-semibold">
+                        Restok Sekarang
+                    </a>
+                </div>
+            @endif
         </div>
     </div>
 
 </div>
 
-{{-- Baris 4: Top 5 Produk Terlaris + Transaksi Terbaru --}}
+{{-- Baris 4: Top Produk + Transaksi Terbaru --}}
 <div class="row g-3">
 
     <div class="col-lg-6">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-header bg-white border-bottom-0 pb-0">
-                <h6 class="fw-bold mb-0">Top 5 Produk Terlaris</h6>
+        <div class="card h-100">
+            <div class="card-header">
+                <span class="fw-bold text-dark" style="font-size: 0.875rem;">Top 5 Produk Terlaris</span>
             </div>
-            <div class="card-body p-0">
-                @if ($topProducts->isEmpty())
-                    <div class="text-center text-muted py-4 small">Belum ada data penjualan.</div>
-                @else
-                    <ul class="list-group list-group-flush">
-                        @foreach ($topProducts as $i => $item)
-                            <li class="list-group-item d-flex justify-content-between align-items-center px-3 py-2">
-                                <div class="d-flex align-items-center gap-2">
-                                    <span class="badge bg-dark rounded-circle" style="width:24px;height:24px;line-height:16px;font-size:0.7rem;">
-                                        {{ $i + 1 }}
-                                    </span>
-                                    <span class="small fw-semibold">{{ $item->product->name ?? '—' }}</span>
+            @if ($topProducts->isEmpty())
+                <div class="card-body text-center text-muted py-5">
+                    <p class="mt-2 small mb-0">Belum ada data penjualan</p>
+                </div>
+            @else
+                <ul class="list-group list-group-flush">
+                    @foreach ($topProducts as $i => $item)
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-4 py-3" style="border-color: #F1F5F9;">
+                            <div class="d-flex align-items-center gap-3">
+                                <span class="d-flex align-items-center justify-content-center fw-bold rounded-circle text-primary"
+                                      style="width: 26px; height: 26px; background-color: var(--primary-light); font-size: 0.78rem; flex-shrink:0;">
+                                    {{ $i + 1 }}
+                                </span>
+                                <div>
+                                    <span class="small fw-semibold text-dark">{{ $item->product->name ?? '—' }}</span>
+                                    <div class="text-muted" style="font-size: 0.73rem;">Rp {{ number_format($item->product->selling_price ?? 0, 0, ',', '.') }}</div>
                                 </div>
-                                <span class="badge bg-success">{{ $item->total_sold }} terjual</span>
-                            </li>
-                        @endforeach
-                    </ul>
-                @endif
-            </div>
+                            </div>
+                            <span class="badge bg-secondary-subtle ms-2">{{ $item->total_sold }} terjual</span>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
         </div>
     </div>
 
     <div class="col-lg-6">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-header bg-white border-bottom-0 pb-0">
-                <h6 class="fw-bold mb-0">Transaksi Terbaru</h6>
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="fw-bold text-dark" style="font-size: 0.875rem;">Transaksi Terbaru</span>
+                <a href="{{ route('owner.reports.sales') }}" class="btn btn-sm btn-action fw-semibold">Laporan</a>
             </div>
-            <div class="card-body p-0">
-                @if ($recentTransactions->isEmpty())
-                    <div class="text-center text-muted py-4 small">Belum ada transaksi.</div>
-                @else
-                    <ul class="list-group list-group-flush">
-                        @foreach ($recentTransactions as $trx)
-                            <li class="list-group-item px-3 py-2">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <div class="fw-semibold small font-monospace">{{ $trx->code }}</div>
-                                        <div class="text-muted" style="font-size:0.72rem;">
-                                            {{ $trx->transaction_date->format('d M Y, H:i') }}
-                                            &bull; {{ $trx->user->name }}
-                                        </div>
-                                    </div>
-                                    <span class="fw-bold text-success small">
-                                        Rp {{ number_format($trx->total, 0, ',', '.') }}
-                                    </span>
+            @if ($recentTransactions->isEmpty())
+                <div class="card-body text-center text-muted py-5">
+                    <p class="mt-2 small mb-0">Belum ada transaksi</p>
+                </div>
+            @else
+                <ul class="list-group list-group-flush">
+                    @foreach ($recentTransactions as $trx)
+                        <li class="list-group-item px-4 py-3 d-flex justify-content-between align-items-center" style="border-color: #F1F5F9;">
+                            <div>
+                                <div class="fw-bold small text-dark font-monospace">{{ $trx->code }}</div>
+                                <div class="text-muted" style="font-size: 0.73rem;">
+                                    {{ $trx->transaction_date->format('d M Y, H:i') }} &bull; {{ $trx->user->name }}
                                 </div>
-                            </li>
-                        @endforeach
-                    </ul>
-                @endif
-            </div>
+                            </div>
+                            <span class="fw-bold text-success small">
+                                Rp {{ number_format($trx->total, 0, ',', '.') }}
+                            </span>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
         </div>
     </div>
 
@@ -227,37 +231,68 @@
                 {
                     label: 'Penjualan (Rp)',
                     data: sales,
-                    backgroundColor: 'rgba(25, 135, 84, 0.7)',
-                    borderColor: 'rgba(25, 135, 84, 1)',
-                    borderWidth: 1,
-                    borderRadius: 4,
+                    backgroundColor: '#0FA4AF',
+                    borderColor: '#0FA4AF',
+                    borderWidth: 0,
+                    borderRadius: 5,
+                    borderSkipped: false,
                 },
                 {
                     label: 'Pengeluaran (Rp)',
                     data: expenses,
-                    backgroundColor: 'rgba(220, 53, 69, 0.6)',
-                    borderColor: 'rgba(220, 53, 69, 1)',
-                    borderWidth: 1,
-                    borderRadius: 4,
+                    backgroundColor: '#E2E8F0',
+                    borderColor: '#E2E8F0',
+                    borderWidth: 0,
+                    borderRadius: 5,
+                    borderSkipped: false,
                 },
             ],
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: {
-                legend: { position: 'top' },
+                legend: {
+                    position: 'top',
+                    labels: {
+                        boxWidth: 10,
+                        boxHeight: 10,
+                        borderRadius: 3,
+                        useBorderRadius: true,
+                        font: { family: 'Plus Jakarta Sans', size: 11.5, weight: '500' },
+                        color: '#64748B',
+                    }
+                },
                 tooltip: {
+                    backgroundColor: '#ffffff',
+                    titleColor: '#0F172A',
+                    bodyColor: '#64748B',
+                    borderColor: '#E2E8F0',
+                    borderWidth: 1,
+                    padding: 10,
                     callbacks: {
-                        label: ctx => 'Rp ' + ctx.parsed.y.toLocaleString('id-ID'),
+                        label: ctx => ctx.dataset.label + ': Rp ' + ctx.parsed.y.toLocaleString('id-ID'),
                     },
                 },
             },
             scales: {
+                x: {
+                    grid: { display: false },
+                    border: { display: false },
+                    ticks: {
+                        font: { family: 'Plus Jakarta Sans', size: 11 },
+                        color: '#94A3B8',
+                    }
+                },
                 y: {
                     beginAtZero: true,
+                    grid: { color: '#F1F5F9' },
+                    border: { display: false, dash: [4, 4] },
                     ticks: {
                         callback: val => 'Rp ' + val.toLocaleString('id-ID'),
-                        maxTicksLimit: 6,
+                        maxTicksLimit: 5,
+                        font: { family: 'Plus Jakarta Sans', size: 11 },
+                        color: '#94A3B8',
                     },
                 },
             },

@@ -46,13 +46,14 @@ class StocksExport implements FromCollection, ShouldAutoSize, WithHeadings, With
         ];
     }
 
+    private int $no = 0;
+
     public function map($row): array
     {
-        static $no = 0;
-        $no++;
+        $this->no++;
 
         return [
-            $no,
+            $this->no,
             $row->created_at->format('d/m/Y H:i'),
             $row->product->name  ?? '-',
             $row->type,

@@ -43,13 +43,14 @@ class ExpensesExport implements FromCollection, ShouldAutoSize, WithHeadings, Wi
         ];
     }
 
+    private int $no = 0;
+
     public function map($row): array
     {
-        static $no = 0;
-        $no++;
+        $this->no++;
 
         return [
-            $no,
+            $this->no,
             $row->expense_date->format('d/m/Y'),
             $row->category,
             $row->description,

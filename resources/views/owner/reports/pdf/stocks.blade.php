@@ -19,7 +19,7 @@
 </style>
 </head>
 <body>
-<h1>SiKasir Angkringan</h1>
+<h1>Sikasir Angkringan</h1>
 <p class="sub">Laporan Stok &bull; {{ $dateFrom }} s/d {{ $dateTo }}{{ $type ? " &bull; Jenis: {$type}" : '' }}</p>
 
 <table>

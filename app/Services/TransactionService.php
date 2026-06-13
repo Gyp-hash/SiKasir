@@ -146,8 +146,11 @@ class TransactionService
 
     private function generateCode(): string
     {
+        // Use DB-level locking to prevent duplicate codes on concurrent requests
         $prefix = 'TRX-'.now()->format('Ymd').'-';
-        $countToday = Transaction::whereDate('transaction_date', today())->count() + 1;
+        $countToday = Transaction::whereDate('transaction_date', today())
+            ->lockForUpdate()
+            ->count() + 1;
 
         return $prefix.str_pad((string) $countToday, 4, '0', STR_PAD_LEFT);
     }

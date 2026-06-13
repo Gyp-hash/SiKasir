@@ -39,14 +39,14 @@ class DashboardController extends Controller
         // ── Produk ───────────────────────────────────────────────────────────
         $totalProducts = Product::count();
 
-        $lowStockProducts = Product::where('stock', '<=', 5)
-            ->where('status', Product::STATUS_ACTIVE)
+        $lowStockProducts = Product::where('status', Product::STATUS_ACTIVE)
+            ->whereColumn('stock', '<=', 'minimum_stock')
             ->orderBy('stock')
             ->get();
 
         // ── Top 5 Produk Terlaris ────────────────────────────────────────────
         $topProducts = TransactionDetail::select('product_id', DB::raw('SUM(quantity) as total_sold'))
-            ->with('product:id,name')
+            ->with('product:id,name,selling_price')
             ->groupBy('product_id')
             ->orderByDesc('total_sold')
             ->limit(5)

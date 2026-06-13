@@ -43,13 +43,14 @@ class SalesExport implements FromCollection, ShouldAutoSize, WithHeadings, WithM
         ];
     }
 
+    private int $no = 0;
+
     public function map($row): array
     {
-        static $no = 0;
-        $no++;
+        $this->no++;
 
         return [
-            $no,
+            $this->no,
             $row->code,
             $row->transaction_date->format('d/m/Y H:i'),
             $row->user->name ?? '-',

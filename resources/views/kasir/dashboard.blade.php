@@ -1,14 +1,14 @@
-@extends('layouts.app', ['title' => 'Dashboard Kasir - SiKasir Angkringan'])
+@extends('layouts.app', ['title' => 'Dashboard Kasir - Sikasir Angkringan'])
 
 @section('content')
 
 {{-- Header --}}
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h1 class="h4 mb-0 fw-bold">Dashboard Kasir</h1>
+        <h1 class="h4 mb-1 fw-bold" style="color:#0F172A;">Pusat Aktivitas Kasir</h1>
         <p class="text-muted small mb-0">Selamat datang, {{ auth()->user()->name }} &mdash; {{ now()->translatedFormat('l, d F Y') }}</p>
     </div>
-    <a href="{{ route('kasir.pos.index') }}" class="btn btn-dark fw-semibold">
+    <a href="{{ route('kasir.pos.index') }}" class="btn btn-primary fw-semibold px-4">
         Buka POS
     </a>
 </div>
@@ -17,103 +17,101 @@
 <div class="row g-3 mb-4">
 
     <div class="col-sm-6 col-lg-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body text-center py-4">
-                <div class="fs-1 fw-bold text-dark">{{ $todayCount }}</div>
-                <div class="text-muted small mt-1">Transaksi Hari Ini</div>
+        <div class="card card-stat h-100 card-hover" style="border-top: 3px solid #0FA4AF;">
+            <div class="card-body" style="padding:1.125rem 1.25rem;">
+                <div class="text-muted text-uppercase mb-2" style="font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em;">Transaksi Hari Ini</div>
+                <div class="fw-extrabold text-dark mt-1" style="font-size: 1.75rem;">{{ $todayCount }}</div>
             </div>
         </div>
     </div>
 
     <div class="col-sm-6 col-lg-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body text-center py-4">
-                <div class="fs-4 fw-bold text-success">Rp {{ number_format($todaySales, 0, ',', '.') }}</div>
-                <div class="text-muted small mt-1">Omzet Hari Ini</div>
+        <div class="card card-stat h-100 card-hover" style="border-top: 3px solid #16A34A;">
+            <div class="card-body" style="padding:1.125rem 1.25rem;">
+                <div class="text-muted text-uppercase mb-2" style="font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em;">Omzet Hari Ini</div>
+                <div class="fw-extrabold text-success mt-1" style="font-size: 1.5rem; letter-spacing: -0.02em;">Rp {{ number_format($todaySales, 0, ',', '.') }}</div>
             </div>
         </div>
     </div>
 
     <div class="col-sm-6 col-lg-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body text-center py-4">
-                <div class="fs-1 fw-bold text-primary">{{ $todayItemsSold }}</div>
-                <div class="text-muted small mt-1">Item Terjual Hari Ini</div>
+        <div class="card card-stat h-100 card-hover" style="border-top: 3px solid #64748B;">
+            <div class="card-body" style="padding:1.125rem 1.25rem;">
+                <div class="text-muted text-uppercase mb-2" style="font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em;">Item Terjual Hari Ini</div>
+                <div class="fw-extrabold text-dark mt-1" style="font-size: 1.75rem;">{{ $todayItemsSold }}</div>
             </div>
         </div>
     </div>
 
     <div class="col-sm-6 col-lg-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body text-center py-4">
-                <div class="fs-1 fw-bold text-secondary">{{ $totalPersonal }}</div>
-                <div class="text-muted small mt-1">Total Transaksi Saya</div>
+        <div class="card card-stat h-100 card-hover" style="border-top: 3px solid #024950;">
+            <div class="card-body" style="padding:1.125rem 1.25rem;">
+                <div class="text-muted text-uppercase mb-2" style="font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em;">Total Transaksi Saya</div>
+                <div class="fw-extrabold text-dark mt-1" style="font-size: 1.75rem;">{{ $totalPersonal }}</div>
             </div>
         </div>
     </div>
 
 </div>
 
-{{-- 5 Transaksi Terakhir (personal kasir) --}}
+{{-- 5 Transaksi Terakhir + Aksi Cepat --}}
 <div class="row g-3">
     <div class="col-lg-8">
-        <div class="card border-0 shadow-sm">
-            <div class="card-header bg-white border-bottom-0 d-flex justify-content-between align-items-center">
-                <h6 class="fw-bold mb-0">Transaksi Terakhir Saya</h6>
-                <a href="{{ route('kasir.transactions.index') }}" class="btn btn-sm btn-outline-dark">Lihat Semua</a>
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="fw-bold text-dark" style="font-size: 0.875rem;">Transaksi Terakhir Saya</span>
+                <a href="{{ route('kasir.transactions.index') }}" class="btn btn-sm btn-action fw-semibold">Lihat Semua</a>
             </div>
-            <div class="card-body p-0">
-                @if ($recentTransactions->isEmpty())
-                    <div class="text-center text-muted py-5">
-                        <p class="mb-2 small">Belum ada transaksi.</p>
-                        <a href="{{ route('kasir.pos.index') }}" class="btn btn-dark btn-sm">Mulai Transaksi</a>
-                    </div>
-                @else
-                    <div class="table-responsive">
-                        <table class="table table-hover table-borderless align-middle mb-0">
-                            <thead class="table-light">
+            @if ($recentTransactions->isEmpty())
+                <div class="card-body text-center text-muted py-5">
+                    <p class="mb-3 small">Belum ada transaksi hari ini.</p>
+                    <a href="{{ route('kasir.pos.index') }}" class="btn btn-primary btn-sm fw-medium px-4">Mulai Transaksi</a>
+                </div>
+            @else
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Kode Transaksi</th>
+                                <th>Tanggal</th>
+                                <th class="text-end">Total</th>
+                                <th class="text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($recentTransactions as $trx)
                                 <tr>
-                                    <th class="ps-3">Kode</th>
-                                    <th>Tanggal</th>
-                                    <th class="text-end pe-3">Total</th>
-                                    <th class="text-center">Aksi</th>
+                                    <td class="fw-bold text-dark font-monospace small">{{ $trx->code }}</td>
+                                    <td class="text-muted small">{{ $trx->transaction_date->format('d M Y, H:i') }}</td>
+                                    <td class="text-end fw-bold text-success small">
+                                        Rp {{ number_format($trx->total, 0, ',', '.') }}
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{{ route('kasir.transactions.show', $trx) }}" class="btn btn-sm btn-action fw-semibold">
+                                            Detail
+                                        </a>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($recentTransactions as $trx)
-                                    <tr>
-                                        <td class="ps-3 fw-semibold font-monospace small">{{ $trx->code }}</td>
-                                        <td class="text-muted small">{{ $trx->transaction_date->format('d M Y, H:i') }}</td>
-                                        <td class="text-end pe-3 fw-bold text-success">
-                                            Rp {{ number_format($trx->total, 0, ',', '.') }}
-                                        </td>
-                                        <td class="text-center">
-                                            <a href="{{ route('kasir.transactions.show', $trx) }}" class="btn btn-sm btn-outline-dark">
-                                                Detail
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                @endif
-            </div>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endif
         </div>
     </div>
 
     {{-- Panel Aksi Cepat --}}
     <div class="col-lg-4">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-header bg-white border-bottom-0">
-                <h6 class="fw-bold mb-0">Aksi Cepat</h6>
+        <div class="card h-100">
+            <div class="card-header">
+                <span class="fw-bold text-dark" style="font-size: 0.875rem;">Aksi Cepat</span>
             </div>
-            <div class="card-body d-flex flex-column gap-2">
-                <a href="{{ route('kasir.pos.index') }}" class="btn btn-dark w-100">
-                    Point of Sale
+            <div class="card-body d-flex flex-column gap-3">
+                <a href="{{ route('kasir.pos.index') }}" class="btn btn-primary w-100 py-3 fw-bold">
+                    Buka Point of Sale (POS)
                 </a>
-                <a href="{{ route('kasir.transactions.index') }}" class="btn btn-outline-secondary w-100">
-                    Riwayat Transaksi
+                <a href="{{ route('kasir.transactions.index') }}" class="btn btn-outline-secondary w-100 py-2 fw-semibold">
+                    Lihat Riwayat Transaksi
                 </a>
             </div>
         </div>
