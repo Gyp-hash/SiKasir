@@ -43,6 +43,9 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('owner.expenses.index') }}">Pengeluaran</a>
+                            </li>
                         @elseif (auth()->user()->isKasir())
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('kasir.dashboard') }}">Dashboard</a>

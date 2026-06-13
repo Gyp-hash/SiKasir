@@ -6,6 +6,7 @@ use App\Http\Controllers\Kasir\PosController;
 use App\Http\Controllers\Kasir\TransactionHistoryController;
 use App\Http\Controllers\Owner\CategoryController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
+use App\Http\Controllers\Owner\ExpenseController;
 use App\Http\Controllers\Owner\ProductController;
 use App\Http\Controllers\Owner\StockMovementController;
 use App\Models\User;
@@ -42,6 +43,12 @@ Route::middleware(['auth', 'active', 'role:'.User::ROLE_OWNER])
         Route::get('/stock', [StockMovementController::class, 'index'])->name('stock.index');
         Route::get('/stock/restock', [StockMovementController::class, 'create'])->name('stock.restock');
         Route::post('/stock/restock', [StockMovementController::class, 'store'])->name('stock.restock.store');
+
+        // Sprint 5 – Pengeluaran
+        Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
+        Route::get('/expenses/create', [ExpenseController::class, 'create'])->name('expenses.create');
+        Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
+        Route::get('/expenses/{expense}', [ExpenseController::class, 'show'])->name('expenses.show');
     });
 
 Route::middleware(['auth', 'active', 'role:'.User::ROLE_KASIR])
