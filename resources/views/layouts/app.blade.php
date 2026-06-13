@@ -46,6 +46,22 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('owner.expenses.index') }}">Pengeluaran</a>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Laporan
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('owner.reports.sales') }}">Laporan Penjualan</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('owner.reports.expenses') }}">Laporan Pengeluaran</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('owner.reports.stocks') }}">Laporan Stok</a>
+                                    </li>
+                                </ul>
+                            </li>
                         @elseif (auth()->user()->isKasir())
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('kasir.dashboard') }}">Dashboard</a>

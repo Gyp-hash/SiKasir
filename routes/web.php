@@ -8,6 +8,7 @@ use App\Http\Controllers\Owner\CategoryController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\Owner\ExpenseController;
 use App\Http\Controllers\Owner\ProductController;
+use App\Http\Controllers\Owner\ReportController;
 use App\Http\Controllers\Owner\StockMovementController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +50,19 @@ Route::middleware(['auth', 'active', 'role:'.User::ROLE_OWNER])
         Route::get('/expenses/create', [ExpenseController::class, 'create'])->name('expenses.create');
         Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
         Route::get('/expenses/{expense}', [ExpenseController::class, 'show'])->name('expenses.show');
+
+        // Sprint 7 – Laporan
+        Route::get('/reports/sales',   [ReportController::class, 'sales'])->name('reports.sales');
+        Route::get('/reports/expenses', [ReportController::class, 'expenses'])->name('reports.expenses');
+        Route::get('/reports/stocks',  [ReportController::class, 'stocks'])->name('reports.stocks');
+
+        Route::get('/reports/sales/pdf',      [ReportController::class, 'exportSalesPdf'])->name('reports.sales.pdf');
+        Route::get('/reports/expenses/pdf',   [ReportController::class, 'exportExpensesPdf'])->name('reports.expenses.pdf');
+        Route::get('/reports/stocks/pdf',     [ReportController::class, 'exportStocksPdf'])->name('reports.stocks.pdf');
+
+        Route::get('/reports/sales/excel',    [ReportController::class, 'exportSalesExcel'])->name('reports.sales.excel');
+        Route::get('/reports/expenses/excel', [ReportController::class, 'exportExpensesExcel'])->name('reports.expenses.excel');
+        Route::get('/reports/stocks/excel',   [ReportController::class, 'exportStocksExcel'])->name('reports.stocks.excel');
     });
 
 Route::middleware(['auth', 'active', 'role:'.User::ROLE_KASIR])
