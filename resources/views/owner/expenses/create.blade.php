@@ -11,7 +11,7 @@
 
         <div class="card shadow-sm">
             <div class="card-header bg-dark text-white">
-                <span class="fw-semibold">💸 Form Pencatatan Pengeluaran</span>
+                <span class="fw-semibold">Form Pencatatan Pengeluaran</span>
             </div>
 
             <div class="card-body">
@@ -112,7 +112,7 @@
 
                     <div class="d-flex gap-2">
                         <button type="submit" id="btn-save-expense" class="btn btn-success fw-bold">
-                            ✅ Simpan Pengeluaran
+                            Simpan Pengeluaran
                         </button>
                         <a href="{{ route('owner.expenses.index') }}" class="btn btn-outline-secondary">Batal</a>
                     </div>

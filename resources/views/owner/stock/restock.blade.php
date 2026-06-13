@@ -11,7 +11,7 @@
 
         <div class="card shadow-sm">
             <div class="card-header bg-dark text-white">
-                <span class="fw-semibold">📥 Form Penambahan Stok</span>
+                <span class="fw-semibold">Form Penambahan Stok</span>
             </div>
 
             <div class="card-body">
@@ -106,7 +106,7 @@
 
                     <div class="d-flex gap-2">
                         <button type="submit" id="btn-restock" class="btn btn-success fw-bold">
-                            ✅ Simpan Restok
+                            Simpan Restok
                         </button>
                         <a href="{{ route('owner.stock.index') }}" class="btn btn-outline-secondary">Batal</a>
                     </div>

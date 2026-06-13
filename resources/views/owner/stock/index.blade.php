@@ -3,7 +3,7 @@
 @section('content')
 <div class="card shadow-sm">
     <div class="card-header bg-dark text-white d-flex align-items-center justify-content-between">
-        <h1 class="h5 mb-0">📦 Riwayat Pergerakan Stok</h1>
+        <h1 class="h5 mb-0">Riwayat Pergerakan Stok</h1>
         <a href="{{ route('owner.stock.restock') }}" class="btn btn-sm btn-warning text-dark fw-semibold">+ Restok Produk</a>
     </div>
 
@@ -52,7 +52,6 @@
     <div class="card-body p-0">
         @if ($movements->isEmpty())
             <div class="text-center text-muted py-5">
-                <div class="fs-1">📭</div>
                 <p class="mt-2">Belum ada pergerakan stok ditemukan.</p>
             </div>
         @else
@@ -81,11 +80,11 @@
                                 <td class="fw-semibold">{{ $movement->product->name }}</td>
                                 <td class="text-center">
                                     @if ($movement->type === 'IN')
-                                        <span class="badge bg-success">↑ Masuk</span>
+                                        <span class="badge bg-success">Masuk</span>
                                     @elseif ($movement->type === 'OUT')
-                                        <span class="badge bg-danger">↓ Keluar</span>
+                                        <span class="badge bg-danger">Keluar</span>
                                     @else
-                                        <span class="badge bg-warning text-dark">⇄ Penyesuaian</span>
+                                        <span class="badge bg-warning text-dark">Penyesuaian</span>
                                     @endif
                                 </td>
                                 <td class="text-center fw-bold">{{ $movement->quantity }}</td>

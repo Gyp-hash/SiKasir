@@ -11,7 +11,7 @@
 
         <div class="card shadow-sm">
             <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                <span class="fw-semibold">💸 Rincian Pengeluaran</span>
+                <span class="fw-semibold">Rincian Pengeluaran</span>
                 <span class="badge bg-secondary">{{ $expense->category }}</span>
             </div>
 

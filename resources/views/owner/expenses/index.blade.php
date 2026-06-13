@@ -3,7 +3,7 @@
 @section('content')
 <div class="card shadow-sm">
     <div class="card-header bg-dark text-white d-flex align-items-center justify-content-between">
-        <h1 class="h5 mb-0">💸 Daftar Pengeluaran</h1>
+        <h1 class="h5 mb-0">Daftar Pengeluaran</h1>
         <a href="{{ route('owner.expenses.create') }}" class="btn btn-sm btn-warning text-dark fw-semibold">+ Tambah Pengeluaran</a>
     </div>
 
@@ -50,7 +50,6 @@
     <div class="card-body p-0">
         @if ($expenses->isEmpty())
             <div class="text-center text-muted py-5">
-                <div class="fs-1">📭</div>
                 <p class="mt-2">Belum ada data pengeluaran.</p>
                 <a href="{{ route('owner.expenses.create') }}" class="btn btn-dark mt-2">+ Tambah Pengeluaran</a>
             </div>
