@@ -81,48 +81,55 @@ class TransactionService
 
     public function calculateCart(array $cart): array
     {
+        if (empty($cart)) {
+            return ['items' => collect(), 'subtotal' => 0.0];
+        }
+
         $products = Product::with('category')
             ->whereIn('id', array_keys($cart))
             ->get()
             ->keyBy('id');
 
-        $items = collect($cart)
-            ->map(function (int $quantity, int|string $productId) use ($products): ?array {
-                $product = $products->get((int) $productId);
+        $items = collect();
 
-                if (! $product) {
-                    return null;
-                }
+        foreach ($cart as $productId => $quantity) {
+            $product = $products->get((int) $productId);
 
-                $price = (float) $product->selling_price;
+            if (! $product) {
+                continue;
+            }
 
-                return [
-                    'product' => $product,
-                    'quantity' => $quantity,
-                    'price' => $price,
-                    'subtotal' => $price * $quantity,
-                ];
-            })
-            ->filter()
-            ->values();
+            $price = (float) $product->selling_price;
+
+            $items->push([
+                'product'  => $product,
+                'quantity' => $quantity,
+                'price'    => $price,
+                'subtotal' => $price * $quantity,
+            ]);
+        }
 
         return [
-            'items' => $items,
+            'items'    => $items,
             'subtotal' => $items->sum('subtotal'),
         ];
     }
 
     private function calculateSubtotal(Collection $products, array $cart): float
     {
-        return collect($cart)->sum(function (int $quantity, int|string $productId) use ($products): float {
+        $subtotal = 0.0;
+
+        foreach ($cart as $productId => $quantity) {
             $product = $products->get((int) $productId);
 
             if (! $product) {
-                return 0;
+                continue;
             }
 
-            return (float) $product->selling_price * $quantity;
-        });
+            $subtotal += (float) $product->selling_price * $quantity;
+        }
+
+        return $subtotal;
     }
 
     private function generateCode(): string
