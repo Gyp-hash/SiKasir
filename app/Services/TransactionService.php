@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Product;
+use App\Models\StockMovement;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Support\Collection;
@@ -67,12 +68,23 @@ class TransactionService
 
                 $transaction->details()->create([
                     'product_id' => $product->id,
-                    'quantity' => $quantity,
-                    'price' => $price,
-                    'subtotal' => $price * $quantity,
+                    'quantity'   => $quantity,
+                    'price'      => $price,
+                    'subtotal'   => $price * $quantity,
                 ]);
 
+                $stockBefore = $product->stock;
                 $product->decrement('stock', $quantity);
+
+                StockMovement::create([
+                    'product_id'   => $product->id,
+                    'type'         => StockMovement::TYPE_OUT,
+                    'quantity'     => $quantity,
+                    'stock_before' => $stockBefore,
+                    'stock_after'  => $stockBefore - $quantity,
+                    'notes'        => 'Penjualan '.$transaction->code,
+                    'created_by'   => $cashier->id,
+                ]);
             }
 
             return $transaction;

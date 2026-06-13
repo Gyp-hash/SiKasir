@@ -30,6 +30,19 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('owner.products.index') }}">Produk</a>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Stok
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('owner.stock.index') }}">Riwayat Stok</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('owner.stock.restock') }}">Restok Produk</a>
+                                    </li>
+                                </ul>
+                            </li>
                         @elseif (auth()->user()->isKasir())
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('kasir.dashboard') }}">Dashboard</a>

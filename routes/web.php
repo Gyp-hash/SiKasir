@@ -7,6 +7,7 @@ use App\Http\Controllers\Kasir\TransactionHistoryController;
 use App\Http\Controllers\Owner\CategoryController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\Owner\ProductController;
+use App\Http\Controllers\Owner\StockMovementController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,11 @@ Route::middleware(['auth', 'active', 'role:'.User::ROLE_OWNER])
         Route::get('/dashboard', OwnerDashboardController::class)->name('dashboard');
         Route::resource('categories', CategoryController::class)->except('show');
         Route::resource('products', ProductController::class)->except('show');
+
+        // Sprint 4 – Stok
+        Route::get('/stock', [StockMovementController::class, 'index'])->name('stock.index');
+        Route::get('/stock/restock', [StockMovementController::class, 'create'])->name('stock.restock');
+        Route::post('/stock/restock', [StockMovementController::class, 'store'])->name('stock.restock.store');
     });
 
 Route::middleware(['auth', 'active', 'role:'.User::ROLE_KASIR])
