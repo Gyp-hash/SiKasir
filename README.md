@@ -47,3 +47,6 @@ Setelah server berjalan:
 - Dashboard kasir: `/kasir/dashboard`
 - Kategori owner: `/owner/categories`
 - Produk owner: `/owner/products`
+
+
+ILOVE PEM WEB
