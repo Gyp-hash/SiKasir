@@ -13,23 +13,6 @@ use App\Http\Controllers\Owner\StockMovementController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
-// ─── TEMPORARY DEBUG ROUTE — HAPUS SETELAH VERIFIKASI ──────────────────────
-// Akses: https://sikasir-production-85a3.up.railway.app/https-debug
-Route::get('/https-debug', function () {
-    return response()->json([
-        'app_url'           => config('app.url'),
-        'app_env'           => config('app.env'),
-        'request_scheme'    => request()->getScheme(),
-        'request_is_secure' => request()->isSecure(),
-        'url_login'         => url('/login'),
-        'route_login_store' => route('login.store'),
-        'x_forwarded_proto' => request()->header('X-Forwarded-Proto'),
-        'x_forwarded_for'   => request()->header('X-Forwarded-For'),
-        'trusted_proxies'   => request()->getTrustedProxies(),
-    ], 200, [], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-});
-// ─────────────────────────────────────────────────────────────────────────────
-
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', [LoginController::class, 'create'])->name('login');
     Route::post('/login', [LoginController::class, 'store'])->name('login.store');
@@ -57,21 +40,21 @@ Route::middleware(['auth', 'active', 'role:'.User::ROLE_OWNER])
         Route::resource('categories', CategoryController::class)->except('show');
         Route::resource('products', ProductController::class)->except('show');
 
-        // Sprint 4 – Stok
+        // Stok
         Route::get('/stock', [StockMovementController::class, 'index'])->name('stock.index');
         Route::get('/stock/restock', [StockMovementController::class, 'create'])->name('stock.restock');
         Route::post('/stock/restock', [StockMovementController::class, 'store'])->name('stock.restock.store');
 
-        // Sprint 5 – Pengeluaran
+        // Pengeluaran
         Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
         Route::get('/expenses/create', [ExpenseController::class, 'create'])->name('expenses.create');
         Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
         Route::get('/expenses/{expense}', [ExpenseController::class, 'show'])->name('expenses.show');
 
-        // Sprint 7 – Laporan
-        Route::get('/reports/sales',   [ReportController::class, 'sales'])->name('reports.sales');
+        // Laporan
+        Route::get('/reports/sales',    [ReportController::class, 'sales'])->name('reports.sales');
         Route::get('/reports/expenses', [ReportController::class, 'expenses'])->name('reports.expenses');
-        Route::get('/reports/stocks',  [ReportController::class, 'stocks'])->name('reports.stocks');
+        Route::get('/reports/stocks',   [ReportController::class, 'stocks'])->name('reports.stocks');
 
         Route::get('/reports/sales/pdf',      [ReportController::class, 'exportSalesPdf'])->name('reports.sales.pdf');
         Route::get('/reports/expenses/pdf',   [ReportController::class, 'exportExpensesPdf'])->name('reports.expenses.pdf');

@@ -17,15 +17,20 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapFive();
 
-        // Force HTTPS scheme when APP_URL is configured as https://.
-        // This ensures route() / url() / asset() always generate https:// links
-        // when deployed to Railway, Render, Heroku, or any HTTPS platform.
+        // Force HTTPS automatically in three scenarios (in priority order):
         //
-        // TrustProxies is configured in bootstrap/app.php (runs earlier in the
-        // pipeline) so that request()->isSecure() also returns true correctly.
+        // 1. Running on Railway — Railway injects RAILWAY_ENVIRONMENT automatically
+        //    into every container, no manual config needed.
+        // 2. HTTPS_ONLY=true is set (manual override for other platforms).
+        // 3. APP_URL already starts with https:// (e.g., correctly configured).
         //
-        // To activate on Railway: set APP_URL=https://your-app.up.railway.app
-        if (str_starts_with(config('app.url'), 'https://')) {
+        // TrustProxies(*) in bootstrap/app.php ensures request()->isSecure()
+        // also works correctly behind Railway's load balancer.
+        $onRailway  = ! empty(env('RAILWAY_ENVIRONMENT'));
+        $httpsOnly  = (bool) env('HTTPS_ONLY', false);
+        $urlIsHttps = str_starts_with(config('app.url'), 'https://');
+
+        if ($onRailway || $httpsOnly || $urlIsHttps) {
             URL::forceScheme('https');
         }
     }
