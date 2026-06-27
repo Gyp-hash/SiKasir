@@ -1,4 +1,4 @@
-# SiKasir Angkringan Smart Business Management
+# SiKasir Angkringan Smart Business Managementt
 
 Sprint 1 berisi autentikasi dasar Laravel 12:
 
